@@ -1,70 +1,44 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
-import 'pages/shorts_page.dart';
-import 'pages/subscriptions_page.dart';
-import 'pages/profile_page.dart';
+import 'core/app_colors.dart';
+import 'core/app_constants.dart';
+import 'screens/main_screen.dart';
 
+/// Entry point of the YouTube Clone app
 void main() {
   runApp(const YouTubeCloneApp());
 }
 
+/// Root widget of the application
+/// Sets up the app theme and navigation
 class YouTubeCloneApp extends StatelessWidget {
   const YouTubeCloneApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'YouTube Clone',
-      theme: ThemeData(primarySwatch: Colors.red, useMaterial3: true),
+      title: AppConstants.appName,
+      theme: _buildAppTheme(),
       home: const MainScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
-}
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = [
-    const HomePage(),
-    const ShortsPage(),
-    const SubscriptionsPage(),
-    const ProfilePage(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.play_arrow),
-            label: 'Shorts',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.subscriptions),
-            label: 'Subscriptions',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
+  /// Builds the app theme with custom colors and styling
+  ThemeData _buildAppTheme() {
+    return ThemeData(
+      primarySwatch: Colors.red,
+      primaryColor: AppColors.primary,
+      useMaterial3: true,
+      // You can add more theme customizations here
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.textPrimary,
+        elevation: 0,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.iconSecondary,
+        backgroundColor: AppColors.backgroundLight,
       ),
     );
   }
